@@ -1,7 +1,8 @@
 from rest_framework import generics
+from rest_framework.permissions import AllowAny
+
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
-from rest_framework.permissions import AllowAny
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -23,6 +24,14 @@ class ProductListView(generics.ListAPIView):
         category_id = self.request.query_params.get("category")
 
         if category_id:
-            queryset = queryset.filter(category_id=category_id)
+            queryset = queryset.filter(
+                category_id=category_id
+        )
 
+        search_query = self.request.query_params.get("search")
+
+        if search_query:
+            queryset = queryset.filter(
+                name__icontains=search_query
+            )
         return queryset
