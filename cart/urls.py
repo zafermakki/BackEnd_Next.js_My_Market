@@ -24,14 +24,14 @@ urlpatterns = [
 
     # Update cart item quantity
     path(
-        "items/<int:item_id>/update",
+        "items/update/<int:item_id>/",
         CartItemUpdateView.as_view(),
         name="cart-item-update",
     ),
 
     # Delete cart item
     path(
-        "items/<int:item_id>/delete",
+        "items/delete/<int:item_id>/",
         CartItemDeleteView.as_view(),
         name="cart-item-delete",
     ),
